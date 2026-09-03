@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+  NOOKAA POS — base layer.
+
+  Design brief: a counter tool first, a premium object second. Paper-white
+  canvas so it reads under store lighting and photographs cleanly; gold used
+  only where a decision gets made; one monospace family carrying every number
+  on the screen so figures never re-flow while they tick.
+*/
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply bg-paper text-ink font-sans antialiased;
+  /* A POS is touched, not scrolled through. Nothing bounces. */
+  overscroll-behavior: none;
+}
+
+/* Numbers never jitter: order ids, money, timers all use tabular figures. */
+.tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* Keyboard focus stays loud — baristas use hotkeys during a rush. */
+:focus-visible {
+  outline: 2px solid theme('colors.gold.DEFAULT');
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Scrollbars: present, quiet, and wide enough for a fingertip. */
+.scroll-y {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.line') transparent;
+}
+.scroll-y::-webkit-scrollbar {
+  width: 10px;
+}
+.scroll-y::-webkit-scrollbar-thumb {
+  background: theme('colors.line');
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+@layer components {
+  /* The eyebrow: small caps label used above every panel. Structure, not decor. */
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.14em] text-faint;
+  }
+
+  .panel {
+    @apply bg-surface border border-line rounded-md;
+  }
+
+  .hairline {
+    @apply border-t border-line;
+  }
+
+  /* Print: only the receipt/label markup survives. */
+  @media print {
+    .no-print {
+      display: none !important;
+    }
+  }
+}
