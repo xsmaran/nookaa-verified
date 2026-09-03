@@ -1,0 +1,16 @@
+# Netlify config for the NOOKAA POS client demo.
+#
+# Frontend-only: there is no backend, no database, nothing server-side to
+# configure. Every screen — including sign-in, catalog, orders and every
+# Admin CRUD page — runs entirely on the browser's IndexedDB, seeded on
+# first load from src/mock/*. This deploys as an ordinary Next.js site.
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NEXT_PUBLIC_ORG_SLUG = "nookaa"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
